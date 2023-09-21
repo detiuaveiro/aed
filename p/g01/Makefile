@@ -24,5 +24,5 @@ table: table.c
 
 .PHONY: clean
 clean:
-	rm $(TARGETS)
+	rm -f $(TARGETS)
 
