@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <assert.h>
@@ -71,6 +72,14 @@ double* Append(double* array_1, size_t size_1, double* array_2, size_t size_2) {
     return rv_array;
 }
 
+double* Append2(double* array_1, size_t size_1, double* array_2, size_t size_2) {
+    double* rv_array = (double*) calloc(size_1+size_2, sizeof(double));
+
+    memcpy (rv_array, array_1, size_1*sizeof(double));
+    memcpy (&rv_array[size_1], array_2, size_2*sizeof(double));
+    return rv_array;
+}
+
 int main(void) {
     size_t size_1 = 0, size_2 = 0;
     
@@ -83,7 +92,11 @@ int main(void) {
     double* array_3 = Append(array_1, size_1, array_2, size_2);
     DisplayArray(array_3, size_1+size_2);
 
+    double* array_4 = Append2(array_1, size_1, array_2, size_2);
+    DisplayArray(array_4, size_1+size_2);
+
     free(array_1);
     free(array_2);
     free(array_3);
+    free(array_4);
 }

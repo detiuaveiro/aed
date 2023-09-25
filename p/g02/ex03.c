@@ -17,10 +17,10 @@ void dummy_Permute(int a, int b, int c) {
 int main(void) {
     int a = 1, b = 2, c = 3;
     
-    int i = 42;
-    int* p = &i;
-    int j = *(&i);
-    int* t = &(*p);
+    //int i = 42;
+    //int* p = &i;
+    //int j = *(&i);
+    //int* t = &(*p);
 
     //printf("%d %d\n", i, j);
     //printf("%p %p\n", p, t);
