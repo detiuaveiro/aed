@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
-int count_alpha(char* str) {
+int count_alpha(const char* str) {
     size_t c = 0, i = 0;
     
     while(str[i] != '\0') {
@@ -17,7 +18,7 @@ int count_alpha(char* str) {
 }
 
 
-int count_alpha_upper(char* str) {
+int count_alpha_upper(const char* str) {
     size_t c = 0, i = 0;
     
     while(str[i] != '\0') {
@@ -55,6 +56,27 @@ void to_upper(char* str) {
     }
 }
 
+int count_alpha_2(const char* str) {
+    size_t c = 0;
+    for (size_t i = 0; str[i]!= '\0'; i++) {
+        if (isalpha(str[i])) {
+            c += 1;
+        }
+    }
+    return c;
+}
+
+int count_alpha_upper_2(const char* str) {
+    size_t i = 0, c = 0;
+    for(; str[i]!='\0'; i++) {
+        if (isupper(str[i])) {
+            c++;
+        }
+    }
+    return c;
+}
+
+
 int main(void) {
     char *str1, *str2;
     str1 = (char*) calloc(51, sizeof(char));
@@ -69,7 +91,9 @@ int main(void) {
     printf("%s\n%s\n", str1, str2);
 
     printf("Number of alphabets in '%s': %d\n", str1, count_alpha(str1));
+    printf("Number of alphabets in '%s': %d\n", str1, count_alpha_2(str1));
     printf("Number of alphabets (upper) in '%s': %d\n", str2, count_alpha_upper(str2));
+    printf("Number of alphabets (upper) in '%s': %d\n", str2, count_alpha_upper_2(str2));
 
     to_lower(str1);
     //to_upper(str2);

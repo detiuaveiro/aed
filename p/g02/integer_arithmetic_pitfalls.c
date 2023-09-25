@@ -14,7 +14,7 @@ int main(void)
   unsigned int i = 1;
   int j = -1;
   int k = -2147483648;
-  //k = k + 1;
+  k = k + 1;
 
   printf("original i = %u (%d)\n", i, i);
   printf("original j = %d (%u)\n", j, j);

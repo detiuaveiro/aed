@@ -22,17 +22,17 @@ int main(void) {
     int j = *(&i);
     int* t = &(*p);
 
-    printf("%d %d\n", i, j);
-    printf("%p %p\n", p, t);
+    //printf("%d %d\n", i, j);
+    //printf("%p %p\n", p, t);
 
-    printf("%d %d\n", i, *p);
-    printf("%p %p\n", &i, p);
+    //printf("%d %d\n", i, *p);
+    //printf("%p %p\n", &i, p);
     
     printf("%d %d %d\n", a, b, c);
-    Permute(&a, &b, &c);
-    //dummy_Permute(a, b, c);
+    //Permute(&a, &b, &c);
+    dummy_Permute(a, b, c);
     printf("%d %d %d\n", a, b, c);
-    Permute(&a, &b, &c);
-    //dummy_Permute(a, b, c);
+    //Permute(&a, &b, &c);
+    dummy_Permute(a, b, c);
     printf("%d %d %d\n", a, b, c);
 }
