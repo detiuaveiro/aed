@@ -10,7 +10,6 @@ int count_alpha(const char* str) {
         if((str[i]>='a' && str[i]<='z') || (str[i]>='A' && str[i]<='Z')) {
             c++;
         }
-        
         i++;
     }
 

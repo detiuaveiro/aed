@@ -3,7 +3,7 @@ CFLAGS=-Wall -std=c11 -g
 
 LIBS=-lm
 
-TARGETS=integer_arithmetic_pitfalls ex02 ex03 ex04
+TARGETS=integer_arithmetic_pitfalls ex02 ex03 ex04 binary_search
 
 all: $(TARGETS)
 
@@ -17,6 +17,9 @@ ex04: ex04.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 integer_arithmetic_pitfalls: integer_arithmetic_pitfalls.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+binary_search: binary_search.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: clean
