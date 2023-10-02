@@ -99,7 +99,7 @@ int main(void) {
   unsigned int end_n = 1000;
 
   printf("\n f1 \n");
-  printf("      n       f1(n)    f1(2n)/f1(n)\n");
+  printf("      n       f1(n)    f1(n)/f1(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -119,7 +119,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f2 \n");
-  printf("      n       f2(n)    f2(2n)/f2(n)\n");
+  printf("      n       f2(n)    f2(n)/f2(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -139,7 +139,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f3 \n");
-  printf("      n       f3(n)    f3(2n)/f3(n)\n");
+  printf("      n       f3(n)    f3(n)/f3(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -159,7 +159,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f4 \n");
-  printf("      n       f4(n)    f4(2n)/f4(n)\n");
+  printf("      n       f4(n)    f4(n)/f4(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -179,7 +179,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f5 \n");
-  printf("      n       f5(n)    f5(2n)/f5(n)\n");
+  printf("      n       f5(n)    f5(n)/f5(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -199,7 +199,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f6 \n");
-  printf("      n       f6(n)    f6(2n)/f6(n)\n");
+  printf("      n       f6(n)    f6(n)/f6(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = start_n; n < end_n; n *= 2) {
@@ -219,7 +219,7 @@ int main(void) {
   printf("-------  ----------  --------------\n");
 
   printf("\n f7 \n");
-  printf("      n       f7(n)    f7(2n)/f7(n)\n");
+  printf("      n       f7(n)    f7(n)/f7(n/2)\n");
   printf("-------  ----------  --------------\n");
 
   for (n = 1; n < 33; n *= 2) {

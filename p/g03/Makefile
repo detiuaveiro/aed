@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -std=c17
 
-LIBS=-lrt
+LIBS=-lrt -lm
 
 TARGETS= functions_iterations_count functions_timing ex03
 
@@ -14,7 +14,7 @@ functions_timing: functions_timing.c
 	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=200112 $(LIBS) -o $@ $<
 
 ex03: ex03.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=200112 $(LIBS) -o $@ $<
 
 .PHONY: clean
 clean:
