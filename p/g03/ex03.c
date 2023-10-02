@@ -53,6 +53,8 @@ long naive_factorion(int n) {
         rv += factorial(ds[i]);   
     }
 
+    free(ds);
+
     return rv;
 }
 
@@ -83,7 +85,6 @@ int main (void) {
     exec_time = finish_time - start_time;
     printf("Factorion [0!! - 10^7!!] = %ld\n", rv);
     printf("%9.3e\n", exec_time);
-
 
     rv = 0;
     start_time = cpu_time();
