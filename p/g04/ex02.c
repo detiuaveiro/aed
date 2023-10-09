@@ -2,18 +2,17 @@
 #include <stdio.h>
 
 /* GLOBAL VARIABLE */
+size_t NUM_OPS;
 
-int NUM_OPS;
-
-void printArray(float* a, int n) {
-  for (int i = 0; i < n; i++) {
-    printf("%f ", a[i]);
+void print_result_table(float *array, size_t n, int r, int ops) {
+  printf("[");
+  for (size_t i = 0; i < n - 1; i++) {
+    printf("%5.1f, ", array[i]);
   }
-
-  printf("\n");
+  printf("%5.1f] Result: %02d N_Ops: %02d\n", array[n - 1], r, ops);
 }
 
-int isGeometricSeq(float* a, int n) {
+int isGeometricSeq(float *a, int n) {
   assert(n > 2);
 
   NUM_OPS++;
@@ -30,103 +29,55 @@ int isGeometricSeq(float* a, int n) {
 }
 
 int main(void) {
-  int r;
-
-  /* TESTING */
+  int r = 0;
 
   float a1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
   float a2[10] = {1, 2, 4, 4, 5, 6, 7, 8, 9, 10};
-
   float a3[10] = {1, 2, 4, 8, 5, 6, 7, 8, 9, 10};
-
   float a4[10] = {1, 2, 4, 8, 16, 6, 7, 8, 9, 10};
-
   float a5[10] = {1, 2, 4, 8, 16, 32, 7, 8, 9, 10};
-
   float a6[10] = {1, 2, 4, 8, 16, 32, 64, 8, 9, 10};
-
   float a7[10] = {1, 2, 4, 8, 16, 32, 64, 128, 9, 10};
-
   float a8[10] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 10};
-
   float a9[10] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
 
-  int size = 10;
-
-  printf(" *** TESTING ***\n");
-
-  printArray(a1, size);
+  size_t size = 10;
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a1, size);
-
-  printf("Result = %d \t NUM_OPS = % d \n ", r, NUM_OPS);
-
-  printArray(a2, size);
+  print_result_table(a1, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a2, size);
-
-  printf("Result = %d \t NUM_OPS = % d \n ", r, NUM_OPS);
-
-  printArray(a3, size);
+  print_result_table(a2, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a3, size);
-
-  printf("Result = %d \t NUM_OPS = % d \n ", r, NUM_OPS);
-
-  printArray(a4, size);
+  print_result_table(a3, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a4, size);
-
-  printf("Result = %d \t NUM_OPS          = % d \n ", r, NUM_OPS);
-
-  printArray(a5, size);
+  print_result_table(a4, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a5, size);
-
-  printf("Result = %d \t NUM_OPS         = % d \n ", r, NUM_OPS);
-
-  printArray(a6, size);
+  print_result_table(a5, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a6, size);
-
-  printf("Result = %d \t NUM_OPS         = % d \n ", r, NUM_OPS);
-
-  printArray(a7, size);
+  print_result_table(a6, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a7, size);
-
-  printf("Result = %d \t NUM_OPS          = % d \n ", r, NUM_OPS);
-
-  printArray(a8, size);
+  print_result_table(a7, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a8, size);
-
-  printf("Result = %d \t NUM_OPS         = % d \n ", r, NUM_OPS);
-
-  printArray(a9, size);
+  print_result_table(a8, size, r, NUM_OPS);
 
   NUM_OPS = 0;
-
   r = isGeometricSeq(a9, size);
-
-  printf("Result = %d \t NUM_OPS         = % d \n ", r, NUM_OPS);
+  print_result_table(a9, size, r, NUM_OPS);
 
   return 0;
 }

@@ -19,4 +19,3 @@ ex03: ex03.c
 .PHONY: clean
 clean:
 	rm -f $(TARGETS)
-
