@@ -11,6 +11,7 @@ $$
 - Best Case: $B(n) = 2$
 - Worst Case: $W(n) = 1 + \sum_{i=2}^{n} 1 = 1+ (n-2) = n - 1$
 - Average Case: 
+
 $$
     A(n) = 1 + \sum_{i=2}^{n} \frac{1}{n-2}  \times \sum_{j=1}^{i} 1 \\
     A(n) = 1 + \sum_{i=2}^{n} \frac{i}{n-2} \\
