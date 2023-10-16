@@ -10,7 +10,7 @@ size_t recursive(size_t n) {
     return 1;
   }
 
-  if (n % 2 == 0) {
+  if (n % 2 != 0) {
     N_CALLS += 2;
     return n + recursive(n / 2) + recursive((n + 1) / 2);
   }
@@ -29,8 +29,6 @@ int main(void) {
   printf("\nCalculo do valor da recorrencia 3:\n\n");
 
   for (size_t i = 1; i <= n; i++) {
-
-    /* Repor o contador  a ZERO */
 
     N_CALLS = 0;
 

@@ -25,8 +25,6 @@ int main(void) {
 
   for (size_t i = 1; i <= n; i++) {
 
-    /* Repor o contador  a ZERO */
-
     N_CALLS = 0;
 
     r = recursive(i);
