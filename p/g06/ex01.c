@@ -1,16 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <error.h>
 
 // Para instrumentar funções:
-long nadd = 0;  // number of additions
-long ncall = 0;  // number of calls (recursive + 1)
+size_t nadd = 0;  // number of additions
+size_t ncall = 0;  // number of calls (recursive + 1)
 
 // Recursive
-int delannoyR(int m, int n) {
+size_t delannoyR(size_t m, size_t n) {
   ncall++;
-  int r;
+  size_t r;
   if (m ==0 || n == 0) {
     r = 1;
   } else {
@@ -21,13 +20,13 @@ int delannoyR(int m, int n) {
 }
 
 #define LIMIT 100
-static int cacheM[1+LIMIT][1+LIMIT] = {{0}};  // everything else = 0
+static size_t cacheM[1+LIMIT][1+LIMIT] = {{0}};  // everything else = 0
 
 // Recursive Memoized
-int delannoyM(int m, int n) {
+size_t delannoyM(size_t m, size_t n) {
   assert(m <= LIMIT && n <= LIMIT);
   ncall++;
-  int r = cacheM[m][n];  // recall
+  size_t r = cacheM[m][n];  // recall
   if (r == 0) {  // not computed yet...
     if (m ==0 || n == 0) {
       r = 1;
@@ -40,16 +39,16 @@ int delannoyM(int m, int n) {
   return r;
 }
 
-int delannoyPD(int m, int n) {
+size_t delannoyPD(size_t m, size_t n) {
   ncall++;
-  int mem[1+m][1+n];
+  size_t mem[1+m][1+n];
   
-  for (int i = 0; i <= m; i++) {
-    for (int j = 0; j <= n; j++) {
+  for (size_t i = 0; i <= m; i++) {
+    for (size_t j = 0; j <= n; j++) {
       if (i == 0 || j == 0) {
         mem[i][j] = 1;
       } else {
-        //printf("(%d,%d)\n", i, j);  // debuging
+        //prsize_tf("(%d,%d)\n", i, j);  // debuging
         assert(mem[i-1][j] > 0);
         assert(mem[i-1][j-1] > 0);
         assert(mem[i][j-1] > 0);
@@ -61,22 +60,22 @@ int delannoyPD(int m, int n) {
   return mem[m][n];
 }
 
-static inline int max(int a, int b) { return a >= b ? a : b; }
-static inline int min(int a, int b) { return a <= b ? a : b; }
+static inline size_t max(size_t a, size_t b) { return a >= b ? a : b; }
+static inline size_t min(size_t a, size_t b) { return a <= b ? a : b; }
 
 // PD Memoizada
 
 // cache para delannoyPDM:
-static int cachePDM[1+LIMIT][1+LIMIT] = {{1}};  // everything else = 0
-static int m_cache = 0;  // last row filled in cachePDM
-static int n_cache = 0;  // last col filled in cachePDM
+static size_t cachePDM[1+LIMIT][1+LIMIT] = {{1}};  // everything else = 0
+static size_t m_cache = 0;  // last row filled in cachePDM
+static size_t n_cache = 0;  // last col filled in cachePDM
 // INVARIANT: cachePDM[i][j] filled for all i < m_cache and j < n_cache
 
-void update_cache(int i, int j) {
+void update_cache(size_t i, size_t j) {
   if (i == 0 || j == 0) {
     cachePDM[i][j] = 1;
   } else {
-    //printf("(%d,%d)\n", i, j);  // debuging
+    //prsize_tf("(%d,%d)\n", i, j);  // debuging
     assert(cachePDM[i-1][j] > 0);
     assert(cachePDM[i-1][j-1] > 0);
     assert(cachePDM[i][j-1] > 0);
@@ -85,27 +84,27 @@ void update_cache(int i, int j) {
   }
 }
 
-int delannoyPDM(int m, int n) {
+size_t delannoyPDM(size_t m, size_t n) {
   assert(m <= LIMIT && n <= LIMIT);
   ncall++;
-  int mmax = max(m, m_cache);
-  int nmax = max(n, n_cache);
-  for (int i = m_cache+1; i <= mmax; i++)
-    for (int j = 0; j <= n_cache; j++)
+  size_t mmax = max(m, m_cache);
+  size_t nmax = max(n, n_cache);
+  for (size_t i = m_cache+1; i <= mmax; i++)
+    for (size_t j = 0; j <= n_cache; j++)
       update_cache(i, j);
   m_cache = mmax;
-  for (int i = 0; i <= mmax; i++)
-    for (int j = n_cache+1; j <= nmax; j++)
+  for (size_t i = 0; i <= mmax; i++)
+    for (size_t j = n_cache+1; j <= nmax; j++)
       update_cache(i, j);
   n_cache = nmax;
   return cachePDM[m][n];
 }
 
 
-void printMatrix(int a[][1+LIMIT], int m, int n) {
-  for (int i = 0; i <= m; i++) {
-    for (int j = 0; j <= n; j++) {
-      printf("%7d ", a[i][j]);
+void prsize_tMatrix(size_t a[][1+LIMIT], size_t m, size_t n) {
+  for (size_t i = 0; i <= m; i++) {
+    for (size_t j = 0; j <= n; j++) {
+      printf("%7ld ", a[i][j]);
     }
     printf("\n");
   }
@@ -113,28 +112,28 @@ void printMatrix(int a[][1+LIMIT], int m, int n) {
 
 
 // test all funcs for (m, n)
-void test(int m, int n) {
-  int res;
+void test(size_t m, size_t n) {
+  size_t res;
  
   printf("\n%-7s\t%4s\t%4s\t%12s\t%12s\t%12s\n", "Method", "m", "n", "del(m,n)", "nadd", "ncall");
   
   if (m <= 13 && n <= 13) {  // avoid long waits!
   nadd = 0l; ncall = 0l;
   res = delannoyR(m, n);
-  printf("%-7s\t%4d\t%4d\t%12d\t%12ld\t%12ld\n", "R", m, n, res, nadd, ncall);
+  printf("%-7s\t%4ld\t%4ld\t%12ld\t%12ld\t%12ld\n", "R", m, n, res, nadd, ncall);
   }
 
   nadd = 0l; ncall = 0l;
   res = delannoyM(m, n);
-  printf("%-7s\t%4d\t%4d\t%12d\t%12ld\t%12ld\n", "RM", m, n, res, nadd, ncall);
+  printf("%-7s\t%4ld\t%4ld\t%12ld\t%12ld\t%12ld\n", "RM", m, n, res, nadd, ncall);
   
   nadd = 0l; ncall = 0l;
   res = delannoyPD(m, n);
-  printf("%-7s\t%4d\t%4d\t%12d\t%12ld\t%12ld\n", "PD", m, n, res, nadd, ncall);
+  printf("%-7s\t%4ld\t%4ld\t%12ld\t%12ld\t%12ld\n", "PD", m, n, res, nadd, ncall);
 
   nadd = 0l; ncall = 0l;
   res = delannoyPDM(m, n);
-  printf("%-7s\t%4d\t%4d\t%12d\t%12ld\t%12ld\n", "PDM", m, n, res, nadd, ncall);
+  printf("%-7s\t%4ld\t%4ld\t%12ld\t%12ld\t%12ld\n", "PDM", m, n, res, nadd, ncall);
 
 }
 
@@ -144,16 +143,15 @@ int main(int argc, char* argv[]) {
       error(1, 0, "Usage: %s m,n ...\n", argv[0]);
   }
 
-  for (int k = 1; k < argc; k++) {
-    int m, n;
-    if (sscanf(argv[k], "%d,%d", &m, &n) != 2) {
+  for (size_t k = 1; k < argc; k++) {
+    size_t m, n;
+    if (sscanf(argv[k], "%ld,%ld", &m, &n) != 2) {
       error(2, 0, "Invalid arg: %s", argv[k]);
     }
     test(m, n);
 
-    printMatrix(cachePDM, m, n);
+    prsize_tMatrix(cachePDM, m, n);
   }
 
   return 0;
 }
-
