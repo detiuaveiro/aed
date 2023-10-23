@@ -65,7 +65,7 @@ where, $T(n)$ has the following asymptotic bounds:
 
 1. If $f(n) = O(n^{log_b (a-ϵ)})$, then $T(n) = Θ(n^{log_b(a)})$.
 
-2. If $f(n) = Θ(nlogb a)$, then $T(n) = Θ(n^{log_b(a)} \times log(n))$.
+2. If $f(n) = Θ(n^{log_b(a)})$, then $T(n) = Θ(n^{log_b(a)} \times log(n))$.
 
 3. If $f(n) = Ω(n^{log_b(a+ϵ)})$, then $T(n) = Θ(f(n))$.
 
