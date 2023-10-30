@@ -1,6 +1,3 @@
-
-// JMR, 2021
-
 #ifndef _DATE_
 #define _DATE_
 

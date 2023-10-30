@@ -1,5 +1,4 @@
-
-// JMR, 2021
+//SHOW // ID: ...
 
 // Complete the functions (marked by ...)
 // so that it passes all tests in DateTest.
@@ -16,13 +15,16 @@ const Date DateMAX = {9999, 12, 31};
 // Check if a yy,mm,dd tuple forms a valid date.
 // (This would be a public static method in Java.)
 int DateIsValid(int yy, int mm, int dd) {
-  return (DateMIN.year) <= yy && yy <= (DateMAX.year) && 1 <= mm && mm <= 12 &&
+  return (DateMIN.year) <= yy && yy <= (DateMAX.year) &&
+         1 <= mm && mm <= 12 &&
          1 <= dd && dd <= DateDaysInMonth(yy, mm);
 }
 
 // Function to test desired internal invariant for valid Date values:
 // the Date should contain valid year,month,day fields.
-static int invariant(Date* d) { return DateIsValid(d->year, d->month, d->day); }
+static int invariant(Date* d) {
+  return DateIsValid(d->year, d->month, d->day);
+}
 
 // Alocate and store a date given by yy, mm, dd integers.
 // (yy, mm, dd) are required to form a valid date.
@@ -30,9 +32,11 @@ static int invariant(Date* d) { return DateIsValid(d->year, d->month, d->day); }
 // or NULL if allocation fails.
 Date* DateCreate(int yy, int mm, int dd) {
   assert(DateIsValid(yy, mm, dd));
-
-  // EDIT Date* d = ...
-
+  Date* d = (Date*) malloc(sizeof(*d));
+  if (d == NULL) return d;
+  d->year = (uint16_t)yy;
+  d->month = (uint8_t)mm;
+  d->day = (uint8_t)dd;
   assert(invariant(d));  // check invariant
   return d;
 }
@@ -40,10 +44,10 @@ Date* DateCreate(int yy, int mm, int dd) {
 // Free the memory pointed to by *pd and invalidate *pd contents.
 // Precondition: *pd must not be NULL.
 // Postcondition: *pd is set to NULL.
-void DateDestroy(Date** pd) {
+void DateDestroy(Date* *pd) {
   assert(*pd != NULL);
-
-  // EDIT ...
+  free(*pd);
+  *pd = NULL;
 }
 
 // table of month lengths in common and leap years
@@ -75,8 +79,7 @@ char* DateFormat(const Date* d, int FMT) {
   if (d == NULL)
     snprintf(strBuffer, sizeof(strBuffer), "NULL");
   else
-    snprintf(strBuffer, sizeof(strBuffer), fmts[FMT], d->year, d->month,
-             d->day);
+    snprintf(strBuffer, sizeof(strBuffer), fmts[FMT], d->year, d->month, d->day);
   return strBuffer;
 }
 
@@ -108,16 +111,29 @@ int DateParse(Date* d, const char* str, int FMT) {
 // Compare dates a and b.
 // Return an integer >0 if a>b, 0 if a==b and <0 if a<b.
 int DateCompare(const Date* a, const Date* b) {
-  // EDIT ...
+  int r = (int)a->year - (int)b->year;
+  if (r!=0) return r;
+  r = (int)a->month - (int)b->month;
+  if (r!=0) return r;
+  r = (int)a->day - (int)b->day;
+  return r;
 }
 
 // Increment date.
 // Precondition: d must precede DateMAX.
 void DateIncr(Date* d) {
   assert(DateCompare(d, &DateMAX) < 0);
-
-  // EDIT ...
-
+  if ((int)d->day < DateDaysInMonth((int)(d->year), (int)(d->month))) {
+    d->day++;
+  } else {
+    d->day = 1;
+    if ((int)d->month < 12) {
+      d->month++;
+    } else {
+      d->month = 1;
+      d->year++;
+    }
+  }
   assert(invariant(d));  // check invariant
 }
 
@@ -125,8 +141,17 @@ void DateIncr(Date* d) {
 // Precondition: d must succeed DateMIN.
 void DateDecr(Date* d) {
   assert(DateCompare(d, &DateMIN) > 0);
-
-  // EDIT ...
-
+  if ((int)d->day > 1) {
+    d->day--;
+  } else {
+    // decrMonth
+    if ((int)d->month > 1) {
+      d->month--;
+    } else {
+      d->year--;
+      d->month = (uint8_t)12;
+    }
+    d->day = DateDaysInMonth((int)(d->year), (int)(d->month));
+  }
   assert(invariant(d));  // check invariant
 }

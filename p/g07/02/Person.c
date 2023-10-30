@@ -1,5 +1,4 @@
-
-// JMR, 2021
+//SHOW // ID: ...
 
 // Complete the functions (marked by ...)
 // so that it passes all tests in PersonTest.
@@ -20,10 +19,21 @@ static int lastID = 0;
 // Returns the pointer to the new structure,
 // or NULL if allocation fails.
 // The names are copied to internally allocated memory.
-Person *PersonCreate(const char *fname, const char *lname, int yy, int mm,
-                     int dd) {
-  // EDIT Person* p = ...
-
+Person* PersonCreate(const char *fname, const char *lname, int yy, int mm, int dd) {
+  size_t flen = strnlen(fname, 100);
+  size_t llen = strnlen(lname, 100);
+  Person* p = (Person*) malloc(sizeof(*p));
+  if (p == NULL) return p;
+  char *s = (char*) malloc((flen+llen+2)*sizeof(char));
+  if (s == NULL) { free(p); return NULL; }
+  p->id = ++lastID;
+  p->birthDate.year = (uint16_t)yy;
+  p->birthDate.month = (uint8_t)mm;
+  p->birthDate.day = (uint8_t)dd;
+  p->firstName = s;
+  p->lastName = s+flen+1;
+  strcpy(p->firstName, fname); // copy the names
+  strcpy(p->lastName, lname);
   return p;
 }
 
@@ -31,19 +41,21 @@ Person *PersonCreate(const char *fname, const char *lname, int yy, int mm,
 // and invalidate *pp contents.
 // Precondition: *pp must not be NULL.
 // Postcondition: *pp is set to NULL.
-void PersonDestroy(Person **pp) {
+void PersonDestroy(Person** pp) {
   assert(*pp != NULL);
-
-  // EDIT ...
+  free((*pp)->firstName);  // free the names
+  free(*pp);
+  *pp = NULL;
 }
 
 // Prints a person formatted as "[id, lastname, firstname, birthdate]",
 // followed by a suffix string.
-void PersonPrintf(Person *p, const char *suffix) {
+void PersonPrintf(Person* p, const char *suffix) {
   if (p == NULL)
     printf("NULL%s", suffix);
   else
-    printf("(%d, %s, %s, %s)%s", p->id, p->lastName, p->firstName,
+    printf("(%d, %s, %s, %s)%s",
+           p->id, p->lastName, p->firstName,
            DateFormat(&(p->birthDate), YMD), suffix);
 }
 
@@ -51,11 +63,14 @@ void PersonPrintf(Person *p, const char *suffix) {
 // Return a negative/positive integer if p1 was born before/after p2.
 // Return zero if p1 and p2 were born on the same date.
 int PersonCompareByBirth(const Person *p1, const Person *p2) {
-  // EDIT ...
+  return DateCompare(&(p1->birthDate), &(p2->birthDate));
 }
 
 // Compare two persons by last name, then first name (if last name is the same).
 // Return a -/+/0 integer if p1 precedes/succeeds/is equal to p2.
 int PersonCompareByLastFirstName(const Person *p1, const Person *p2) {
-  // EDIT ...
+  int cmp = strcmp(p1->lastName, p2->lastName);
+  if (cmp != 0) return cmp;
+  cmp = strcmp(p1->firstName, p2->firstName);
+  return cmp;
 }

@@ -1,6 +1,3 @@
-
-// JMR, 2021
-
 // DO NOT CHANGE THIS FILE.
 
 #include <assert.h>
@@ -11,16 +8,10 @@
 #include "Person.h"
 
 // MACRO to print expression X of type int (int X) and its result
-#define SHOWint(X)                 \
-  do {                             \
-    printf("%s -> %d\n", #X, (X)); \
-  } while (0)
+#define SHOWint(X) do { printf("%s -> %d\n", #X, (X)); } while (0)
 
 // MACRO to print expression X of type string (char* X) and its result
-#define SHOWstr(X)                 \
-  do {                             \
-    printf("%s -> %s\n", #X, (X)); \
-  } while (0)
+#define SHOWstr(X) do { printf("%s -> %s\n", #X, (X)); } while (0)
 
 // MACRO to print expression X of type date (Date* X) and its result
 #define SHOWDate(X)                               \
@@ -203,3 +194,25 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+
+//HIDE
+//ARGS 1
+//ARGS 2
+//ARGS 3
+//ARGS 4
+//ARGS 5
+//ARGS 6
+//ARGS 7
+//ARGS 8
+//ARGS 9
+//ARGS 10
+//ARGS 11
+/*
+Public URL (for your students): https://codecheck.io/files/23102413031zknmf6vy8ze5x7uxrvmjqjgx
+Edit URL (for you only): https://codecheck.io/private/problem/23102413031zknmf6vy8ze5x7uxrvmjqjgx/5BVFOBZO275CYIOEWM84587UP
+Public URL for your students:
+    https://codecheck.io/assignment/2310241351eqja6h2wl4914v103w3eratjj
+Private URL for you only:
+    https://codecheck.io/private/assignment/2310241351eqja6h2wl4914v103w3eratjj/97NMQ1GM31DNOOJFFN2FZ2MBT
+*/
+//SHOW
