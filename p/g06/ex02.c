@@ -20,7 +20,7 @@ size_t coin_row(size_t *C, size_t n)  {
 
 void print_array(size_t *C, size_t n) {
     printf("[");
-    for(size_t i = 1; i < n-1; i++) {
+    for(size_t i = 0; i < n-1; i++) {
         printf("%3ld,", C[i]);
     }
     printf("%3ld]\n", C[n-1]);
