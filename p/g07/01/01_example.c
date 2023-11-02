@@ -18,8 +18,10 @@
 #include "IntegersStack.h"
 
 
-#define MAX(a,b) (((a)>(b))?(a):(b)) 
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
+#define TRUE  (1==1)
+#define FALSE (!TRUE)
 
 size_t number_digits(int n) {
     size_t c = (n==0)?1:log10(n)+1;  
@@ -56,7 +58,7 @@ int main(int argc, char* argv[]) {
             QueueEnqueue(queue, d[j]);
         }
         
-        int result = 0;
+        int result = TRUE;
         while (!QueueIsEmpty(queue) && !StackIsEmpty(stack)) {
             int digit_stack = 0, digit_queue = 0;
 
@@ -64,12 +66,12 @@ int main(int argc, char* argv[]) {
             digit_queue = QueueDequeue(queue);
 
             if(digit_queue != digit_stack) {
-                result = 1;
+                result = FALSE;
                 break;
             }
         }
 
-        if (result==0) {
+        if (result) {
             printf("%d = True\n", number);
         } else {
             printf("%d = False\n", number);
