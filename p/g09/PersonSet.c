@@ -54,7 +54,10 @@ PersonSet *PersonSetCreate() {
 // Destroy PersonSet *pps
 void PersonSetDestroy(PersonSet **pps) {
   assert(*pps != NULL);
-  // COMPLETE ...
+  
+  ListDestroy(&((*pps)->persons));
+  free(*pps);
+  *pps = NULL;
 }
 
 int PersonSetSize(const PersonSet *ps) { return ListGetSize(ps->persons); }
@@ -83,34 +86,45 @@ static int search(const PersonSet *ps, int id) {
 // Add person *p to *ps.
 // Do nothing if *ps already contains a person with the same id.
 void PersonSetAdd(PersonSet *ps, Person *p) {
-  // COMPLETE ...
+  ListInsert(ps->persons, (void *)p);
+  ListTestInvariants(ps->persons);
 }
 
 // Pop one person out of *ps.
 Person *PersonSetPop(PersonSet *ps) {
   assert(!PersonSetIsEmpty(ps));
   // It is easiest to pop and return the person in the first position!
-  // COMPLETE ...
-
-  return NULL;
+  Person *p = (Person *)ListRemoveHead(ps->persons);
+  ListTestInvariants(ps->persons);
+  return p;
 }
 
 // Remove the person with given id from *ps, and return it.
 // If no such person is found, return NULL and leave set untouched.
 Person *PersonSetRemove(PersonSet *ps, int id) {
   // You may call search here!
-  // COMPLETE ...
-
-  return NULL;
+  Person *p = NULL;
+  int i = search(ps, id);  // Current node is updated
+  if (i >= 0) {
+    // Current node is the node to be removed
+    p = (Person *)ListRemoveCurrent(ps->persons);
+  }
+  ListTestInvariants(ps->persons);
+  return p;
 }
 
 // Get the person with given id of *ps.
 // return NULL if it is not in the set.
 Person *PersonSetGet(const PersonSet *ps, int id) {
   // You may call search here!
-  // COMPLETE ...
-
-  return NULL;
+  Person *p = NULL;
+  int i = search(ps, id);  // Current node is updated
+  if (i >= 0) {
+    // Current node is the node
+    p = (Person *)ListGetCurrentItem(ps->persons);
+  }
+  ListTestInvariants(ps->persons);
+  return p;
 }
 
 // Return true (!= 0) if set contains person wiht given id, false otherwise.
@@ -124,7 +138,41 @@ PersonSet *PersonSetUnion(const PersonSet *ps1, const PersonSet *ps2) {
   PersonSet *ps = PersonSetCreate();
 
   // Merge the two sorted lists (similar to mergesort).
-  // COMPLETE ...
+  ListMoveToHead(ps1->persons);
+  ListMoveToHead(ps2->persons);
+
+  while (ListCurrentIsInside(ps1->persons) && ListCurrentIsInside(ps2->persons)) {
+    Person *p1 = (Person *)ListGetCurrentItem(ps1->persons);
+    Person *p2 = (Person *)ListGetCurrentItem(ps2->persons);
+
+    if (p1->id < p2->id) {
+      ListInsert(ps->persons, (void *)p1);
+      ListMoveToNext(ps1->persons);
+    } else if (p1->id > p2->id) {
+      ListInsert(ps->persons, (void *)p2);
+      ListMoveToNext(ps2->persons);
+    } else {
+      ListInsert(ps->persons, (void *)p1);
+      ListMoveToNext(ps1->persons);
+      ListMoveToNext(ps2->persons);
+    }
+  }
+
+  while (ListCurrentIsInside(ps1->persons)) {
+    Person *p = (Person *)ListGetCurrentItem(ps1->persons);
+    ListInsert(ps->persons, (void *)p);
+    ListMoveToNext(ps1->persons);
+  }
+
+  while (ListCurrentIsInside(ps2->persons)) {
+    Person *p = (Person *)ListGetCurrentItem(ps2->persons);
+    ListInsert(ps->persons, (void *)p);
+    ListMoveToNext(ps2->persons);
+  }
+
+  ListTestInvariants(ps1->persons);
+  ListTestInvariants(ps2->persons);
+  ListTestInvariants(ps->persons);
 
   return ps;
 }
@@ -133,7 +181,29 @@ PersonSet *PersonSetUnion(const PersonSet *ps1, const PersonSet *ps2) {
 // NOTE: memory is allocated.  Client must call PersonSetDestroy!
 PersonSet *PersonSetIntersection(const PersonSet *ps1, const PersonSet *ps2) {
   PersonSet *ps = PersonSetCreate();
-  // COMPLETE ...
+  const PersonSet *smallestSet;
+  const PersonSet *largestSet;
+
+  if (PersonSetSize(ps1) < PersonSetSize(ps2)) {
+    smallestSet = ps1;
+    largestSet = ps2;
+  } else {
+    smallestSet = ps2;
+    largestSet = ps1;
+  }
+
+  // Iterate through the smallest set
+  for (ListMoveToHead(smallestSet->persons); ListCurrentIsInside(smallestSet->persons);
+       ListMoveToNext(smallestSet->persons)) {
+    Person *p = (Person *)ListGetCurrentItem(smallestSet->persons);
+    if (PersonSetContains(largestSet, p->id) == 1) {
+      ListInsert(ps->persons, (void *)p);
+    }
+  }
+
+  ListTestInvariants(ps1->persons);
+  ListTestInvariants(ps2->persons);
+  ListTestInvariants(ps->persons);
 
   return ps;
 }
@@ -142,22 +212,41 @@ PersonSet *PersonSetIntersection(const PersonSet *ps1, const PersonSet *ps2) {
 // NOTE: memory is allocated.  Client must call PersonSetDestroy!
 PersonSet *PersonSetDifference(const PersonSet *ps1, const PersonSet *ps2) {
   PersonSet *ps = PersonSetCreate();
-  // COMPLETE ...
+
+  for (ListMoveToHead(ps1->persons); ListCurrentIsInside(ps1->persons);
+       ListMoveToNext(ps1->persons)) {
+    Person *p = (Person *)ListGetCurrentItem(ps1->persons);
+    if (PersonSetContains(ps2, p->id) == 0) {
+      ListInsert(ps->persons, (void *)p);
+    }
+  }
+
+  ListTestInvariants(ps1->persons);
+  ListTestInvariants(ps2->persons);
+  ListTestInvariants(ps->persons);
 
   return ps;
 }
 
 // Return true iff *ps1 is a subset of *ps2.
 int PersonSetIsSubset(const PersonSet *ps1, const PersonSet *ps2) {
-  // COMPLETE ...
+  if (PersonSetSize(ps1) > PersonSetSize(ps2)) {
+    return 0;
+  }
 
-  return 0;
+  int eq = 1;
+  for (ListMoveToHead(ps1->persons); eq && ListCurrentIsInside(ps1->persons);
+       ListMoveToNext(ps1->persons)) {
+    Person *p = (Person *)ListGetCurrentItem(ps1->persons);
+    eq = PersonSetContains(ps2, p->id);
+  }
+  ListTestInvariants(ps1->persons);
+  ListTestInvariants(ps2->persons);
+  return eq;
 }
 
 // Return true if the two sets contain exactly the same elements.
 int PersonSetEquals(const PersonSet *ps1, const PersonSet *ps2) {
   // You may call PersonSetIsSubset here!
-  // COMPLETE ...
-
-  return 0;
+  return PersonSetSize(ps1) == PersonSetSize(ps2) && PersonSetIsSubset(ps1, ps2);
 }
