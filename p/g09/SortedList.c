@@ -112,7 +112,13 @@ void ListMove(List* l, int newPos) {
     l->current = l->tail;
   } else {  // move to an inner node
     // Start at head (or current position) and move forward until newPos.
-    // COMPLETE ...
+    if (l->currentPos == -1 || newPos < l->currentPos) {
+      l->current = l->head;
+      l->currentPos = 0;
+    }
+    for (int i = l->currentPos; i < newPos; i++) {
+      l->current = l->current->next;
+    }
   }
   l->currentPos = newPos;
 }
@@ -138,12 +144,65 @@ void ListMoveToTail(List* l) { ListMove(l, l->size - 1); }
 // If search fails. return -1 and don't change the current node.
 // (Try to optimize the search to start at the current node if possible.)
 int ListSearch(List* l, const void* p) {
-  // COMPLETE ...
+  int end = l->size;
+  int pos = 0;
+  struct _ListNode* sn = l->head;
+  int cmp = 1;
+  while (pos < end) {
+    cmp = l->compare(p, sn->item);
+    if (cmp <= 0) break;
+    pos++;
+    sn = sn->next;
+  }
+  if (cmp != 0) return -1;
+  l->current = sn;
+  l->currentPos = pos;
 
   return 0;
 }
 
 // You may add extra definitions here.
+
+// Search Optimized version.
+int ListSearch2(List* l, const void* p) {
+  if (l->size == 0) return -1;  // if empty => fail
+  // search until end
+  int end;
+  int pos = l->currentPos;
+  struct _ListNode* sn = l->current;
+  int cmp = -1;
+  if (pos > 0) {
+    cmp = l->compare(p, sn->item);
+    if (cmp < 0) {
+      end = pos;
+      pos = 0;
+      sn = l->head;
+    }
+    else if (cmp > 0) {
+      end = l->size;
+      pos = l->currentPos+1;
+      sn = l->current->next;
+    }
+    else {
+      return 0;
+    }
+  }
+  else {
+    end = l->size;
+    pos = 0;
+    sn = l->head;
+  }
+  while (pos < end) {
+    cmp = l->compare(p, sn->item);
+    if (cmp <= 0) break;
+    pos++;
+    sn = sn->next;
+  }
+  if (cmp != 0) return -1;
+  l->current = sn;
+  l->currentPos = pos;
+  return 0;
+}
 
 // INSERT
 
@@ -255,7 +314,12 @@ void* ListRemoveCurrent(List* l) {
   else {
     // find node before current, change its next field,
     // free current, change current, change size
-    // COMPLETE ...
+    struct _ListNode* sn = l->head;
+    while (sn->next != l->current) sn = sn->next;
+    sn->next = l->current->next;
+    free(l->current);
+    l->current = sn->next;
+    l->size--;
   }
   return item;
 }

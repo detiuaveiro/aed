@@ -32,7 +32,21 @@ static int cmpP(const void *a, const void *b) {
 // Create a PersonSet.
 PersonSet *PersonSetCreate() {
   // You must allocate space for the struct and create an empty persons list!
-  // COMPLETE ...
+  PersonSet *ps = (PersonSet *)malloc(sizeof(*ps));
+  if (ps == NULL) {
+    perror("PersonSetCreate");
+    exit(2);
+  }
+
+  ps->persons = ListCreate(cmpP);
+  if (ps->persons == NULL) {
+    free(ps);
+    perror("PersonSetCreate");
+    exit(2);
+  }
+
+  ListTestInvariants(ps->persons);
+  return ps;
 
   return NULL;
 }
