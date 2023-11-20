@@ -47,8 +47,6 @@ PersonSet *PersonSetCreate() {
 
   ListTestInvariants(ps->persons);
   return ps;
-
-  return NULL;
 }
 
 // Destroy PersonSet *pps
