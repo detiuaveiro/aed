@@ -40,27 +40,3 @@ file%.txt:
 clean:
 	rm -f *.o
 	rm -f $(TARGETS)
-
-
-## SPECIAL TARGETS BELOW //HIDE
-SRCS = $(wildcard ./*.c ./*.h ./Makefile ./*.txt)
-SKEL = skel
-BSKEL = $(notdir $(SKEL))
-
-ALL: all skel
-
-skel: $(SKEL)/ $(subst ./,$(SKEL)/,$(SRCS))
-	rm -f $(SKEL).zip
-	zip -jr $(SKEL).zip $(BSKEL)
-	#rm -f $(BSKEL)
-
-$(SKEL)/:
-	rm -rf $@
-	install -d $@
-
-$(SKEL)/%: %
-	sed -f filter.sed $< > $@
-
-$(SKEL)/%.txt: ./%.txt
-	cp -a $^ $@
-

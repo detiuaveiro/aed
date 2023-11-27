@@ -104,19 +104,13 @@ void MinHeapInsert(MinHeap* ph, void* item) {
     int p = _parent(n);
 
     // if item not less than parent, then we've found the right spot!
-    // HIDE
     if (ph->compare(item, ph->array[p]) >= 0) break;
-    // EDIT if (...) break;
 
     // otherwise, move up the item at node p to open up space for new item
-    // HIDE
     ph->array[n] = ph->array[p];
-    // EDIT ph->array[...] = ph->array[...];
 
     // update
-    // HIDE
     n = p;  // p is the new vacant spot
-    // EDIT n = ... // the new vacant spot
   }
   ph->array[n] = item;  // store item at node n
   ph->size++;
@@ -130,40 +124,29 @@ void MinHeapRemoveMin(MinHeap* ph) {
   int n = 0;   // the just emptied spot... must fill it with smallest child
   while (1) {
     // index of first child
-    // HIDE
     unsigned int min = _child(n, 1);  // first child (might not exist)
-    // EDIT int min = ...          // first child (might not exist)
 
     if (!(min < ph->size)) break;  // if no second child, stop looking
 
     // if second child is smaller, choose it
-    // HIDE
     if (ph->compare(ph->array[min + 1], ph->array[min]) < 0) {
       min = min + 1;
     }
-    // EDIT if (...) {
-    // EDIT    min = ...
-    // EDIT }
 
     // if smallest child is not smaller than last, stop looking
     if (!(ph->compare(ph->array[min], ph->array[ph->size]) < 0)) break;
 
     // move smallest child down to fill empty parent spot
-    // HIDE
     ph->array[n] = ph->array[min];
-    // EDIT ph->array[...] = ph->array[...];
 
     n = min;  // now, the smallest _child spot was just emptied!
   }
   // move last element to emptied spot
-  // HIDE
   ph->array[n] = ph->array[ph->size];
   // EDIT ph->array[...] = ph->array[...];
 
   // mark last element as vacant
-  // HIDE
   ph->array[ph->size] = NULL;
-  // EDIT ph->array[...] = NULL;
 }
 
 // Check the (min-)heap property (the heap invariant):
@@ -174,9 +157,7 @@ int MinHeapCheck(MinHeap* ph) {
   // For each node other than root: compare with its parent
   for (unsigned int n = 1; n < ph->size; n++) {
     int p = _parent(n);
-    // HIDE
     if (ph->compare(ph->array[n], ph->array[p]) < 0) return 0;
-    // EDIT if (... < 0) return 0;
   }
   return 1;
 }
