@@ -98,6 +98,7 @@ static inline int _parent(int n) {
 // Insert the item into the heap
 void MinHeapInsert(MinHeap* ph, void* item) {
   assert(!MinHeapIsFull(ph));
+  
   // start at the first vacant spot (just after the last occupied node)
   int n = ph->size;
   while (n > 0) {
@@ -143,7 +144,6 @@ void MinHeapRemoveMin(MinHeap* ph) {
   }
   // move last element to emptied spot
   ph->array[n] = ph->array[ph->size];
-  // EDIT ph->array[...] = ph->array[...];
 
   // mark last element as vacant
   ph->array[ph->size] = NULL;
