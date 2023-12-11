@@ -11,7 +11,7 @@
 
 int main(void) {
   // Graph
-  Graph* g01 = GraphCreate(6, 0, 0);
+  Graph *g01 = GraphCreate(6, 0, 0);
 
   GraphAddEdge(g01, 0, 5);
   GraphAddEdge(g01, 2, 4);
@@ -25,7 +25,7 @@ int main(void) {
   GraphDisplay(g01);
 
   // DFS traversal starting at vertex 0
-  GraphDFSRec* traversal = GraphDFSRecExecute(g01, 0);
+  GraphDFSRec *traversal = GraphDFSRecExecute(g01, 0);
 
   printf("Path from 0 to 5: ");
   GraphDFSRecShowPath(traversal, 5);

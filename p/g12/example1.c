@@ -10,7 +10,7 @@
 
 int main(void) {
   // What kind of graph is g01?
-  Graph* g01 = GraphCreate(6, 0, 0);
+  Graph *g01 = GraphCreate(6, 0, 0);
   GraphAddEdge(g01, 1, 2);
   GraphAddEdge(g01, 1, 4);
   GraphAddEdge(g01, 3, 4);
@@ -25,7 +25,7 @@ int main(void) {
     GraphListAdjacents(g01, i);
   }
 
-  Graph* dig01 = GraphCreate(6, 1, 0);
+  Graph *dig01 = GraphCreate(6, 1, 0);
   GraphAddEdge(dig01, 1, 2);
   GraphAddEdge(dig01, 1, 4);
   GraphAddEdge(dig01, 3, 4);
@@ -34,7 +34,7 @@ int main(void) {
   printf("Remove edge (1,2)\n");
   GraphDisplay(dig01);
 
-  Graph* g03 = GraphCreate(6, 0, 1);
+  Graph *g03 = GraphCreate(6, 0, 1);
   GraphAddWeightedEdge(g03, 1, 2, 3);
   GraphAddWeightedEdge(g03, 1, 4, 5);
   GraphAddWeightedEdge(g03, 3, 4, 10);

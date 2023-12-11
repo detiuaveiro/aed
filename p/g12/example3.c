@@ -11,7 +11,7 @@
 #include "GraphDFSWithStack.h"
 
 int main(void) {
-  Graph* g01 = GraphCreate(6, 0, 0);
+  Graph *g01 = GraphCreate(6, 0, 0);
 
   GraphAddEdge(g01, 0, 5);
   GraphAddEdge(g01, 2, 4);
@@ -27,7 +27,7 @@ int main(void) {
   // Recursive DFS traversal
 
   printf("RECURSIVE DFS traversal\n");
-  GraphDFSRec* traversalRec = GraphDFSRecExecute(g01, 0);
+  GraphDFSRec *traversalRec = GraphDFSRecExecute(g01, 0);
 
   printf("Path from 0 to 5: ");
   GraphDFSRecShowPath(traversalRec, 5);
@@ -38,7 +38,7 @@ int main(void) {
   // STACK-based DFS traversal
 
   printf("DFS traversal with STACK\n");
-  GraphDFSWithStack* traversalWithStack = GraphDFSWithStackExecute(g01, 0);
+  GraphDFSWithStack *traversalWithStack = GraphDFSWithStackExecute(g01, 0);
 
   printf("Vertices reached, with start vertex %d : ", 0);
   for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
@@ -59,7 +59,7 @@ int main(void) {
   // QUEUE-based BFS traversal
 
   printf("BFS traversal with QUEUE\n");
-  GraphBFSWithQueue* traversalWithQueue = GraphBFSWithQueueExecute(g01, 0);
+  GraphBFSWithQueue *traversalWithQueue = GraphBFSWithQueueExecute(g01, 0);
 
   printf("Vertices reached, with start vertex %d : ", 0);
   for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
