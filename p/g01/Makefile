@@ -3,7 +3,7 @@ CFLAGS=-Wall -std=c11
 
 LIBS=-lm
 
-TARGETS=simplest simplest_1 warnings ex04 hello hello_X table
+TARGETS=simplest simplest_1 warnings ex04 hello hello_X table ex06
 
 all: $(TARGETS)
 
@@ -27,6 +27,9 @@ hello_X: hello_X.c
 
 table: table.c
 	$(CC) $(CFLAGS) -o $@ $< ${LIBS}
+
+ex06: ex06.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 .PHONY: clean
 clean:

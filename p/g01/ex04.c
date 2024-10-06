@@ -34,4 +34,6 @@ int main(void) {
 
     len = min(strlen("sizeof(double)"), sizeof(padder) - 1);
     printf("%.*s%s%2ld\n", len, "sizeof(double)", padder + len, sizeof(double));
+
+    return 0;
 }
