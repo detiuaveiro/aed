@@ -6,8 +6,8 @@ int main (void) {
     printf("Insert number of lines: ");
     scanf("%d", &lines);
 
-    printf("%7s %7s %7s\n", "Number", "Square", "SQRT");
+    printf("%7s %7s %7s\n", "Number", "Power", "SQRT");
     for(int i = 1; i <= lines; i++) {
-        printf("%07d %7.2f %7.2f\n", i, pow(i, 2), sqrt(i));
+        printf("%7d %7.2f %7.2f\n", i, pow(i, 2), sqrt(i));
     }
 }

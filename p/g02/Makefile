@@ -17,7 +17,7 @@ ex04: ex04.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 integer_arithmetic_pitfalls: integer_arithmetic_pitfalls.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -Wextra -o $@ $<
 
 binary_search: binary_search.c
 	$(CC) $(CFLAGS) -o $@ $<

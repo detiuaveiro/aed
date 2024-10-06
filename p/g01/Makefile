@@ -3,14 +3,20 @@ CFLAGS=-Wall -std=c11
 
 LIBS=-lm
 
-TARGETS=simplest warnings hello hello_X table
+TARGETS=simplest simplest_1 warnings ex04 hello hello_X table
 
 all: $(TARGETS)
 
 simplest: simplest.c
 	$(CC) $(CFLAGS) -o $@ $<
 
+simplest_1: simplest_1.c
+	$(CC) $(CFLAGS) -o $@ $<
+
 warnings: warnings.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+ex04: ex04.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 hello: hello.c

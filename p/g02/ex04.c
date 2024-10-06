@@ -99,4 +99,6 @@ int main(void) {
     free(array_2);
     free(array_3);
     free(array_4);
+
+    return 0;
 }

@@ -15,6 +15,7 @@
 //
 
 #include <stdio.h>
+
 #include "elapsed_time.h"
 
 unsigned int f1(unsigned int n) {
@@ -102,7 +103,7 @@ int main(void) {
   unsigned int end_n = 10000000;
 
   printf("\n f1 \n");
-  printf("          n    time1(n)    time1(10n)/time1(n)\n");
+  printf("          n    time1(n)   time1(n)/time1(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n; n *= 10) {
@@ -110,10 +111,13 @@ int main(void) {
     // call function
     //
     start_time = cpu_time();
-    f1(n);
+    for (int i = 0; i < 1000; i++) {
+      f1(n);
+    }
     finish_time = cpu_time();
 
     exec_time = finish_time - start_time;
+    exec_time = exec_time / 1000.0;
 
     printf("%11d  %9.3e", n, exec_time);
 
@@ -130,7 +134,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f2 \n");
-  printf("          n    time2(n)    time2(10n)/time2(n)\n");
+  printf("          n    time2(n)   time2(n)/time2(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n / 100; n *= 10) {
@@ -158,7 +162,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f3 \n");
-  printf("          n    time3(n)    time3(10n)/time3(n)\n");
+  printf("          n    time3(n)   time3(n)/time3(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n / 100; n *= 10) {
@@ -186,7 +190,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f4 \n");
-  printf("          n    time4(n)    time4(10n)/time4(n)\n");
+  printf("          n    time4(n)   time4(n)/time4(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n / 10000; n *= 10) {
@@ -214,7 +218,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f5 \n");
-  printf("          n    time5(n)    time5(10n)/time5(n)\n");
+  printf("          n    time5(n)   time5(n)/time5(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n / 10000; n *= 10) {
@@ -242,7 +246,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f6 \n");
-  printf("          n    time6(n)    time6(10n)/time6(n)\n");
+  printf("          n    time6(n)   time6(n)/time6(n/10)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = start_n; n <= end_n; n *= 10) {
@@ -270,7 +274,7 @@ int main(void) {
   printf("-----------  ----------  ---------------------\n");
 
   printf("\n f7 \n");
-  printf("          n    time7(n)    time7(2n)/time7(n)\n");
+  printf("          n    time7(n)    time7(n)/time7(n/2)\n");
   printf("-----------  ----------  ---------------------\n");
 
   for (n = 1; n < 33; n *= 2) {

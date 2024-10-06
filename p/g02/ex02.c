@@ -3,6 +3,7 @@
 #include<string.h>
 #include<ctype.h>
 
+
 int count_alpha(const char* str) {
     size_t c = 0, i = 0;
     
@@ -34,9 +35,11 @@ int count_alpha_upper(const char* str) {
 void to_lower(char* str) {
     size_t i = 0;
     
+    char diff = ('a' - 'A');
+
     while(str[i] != '\0') {
         if (str[i] >='A' && str[i]<='Z') {
-            str[i] += ('a' - 'A');
+            str[i] += diff;
         }
         
         i++;
@@ -75,7 +78,6 @@ int count_alpha_upper_2(const char* str) {
     return c;
 }
 
-
 int main(void) {
     char *str1, *str2;
     str1 = (char*) calloc(51, sizeof(char));
@@ -95,6 +97,7 @@ int main(void) {
     printf("Number of alphabets (upper) in '%s': %d\n", str2, count_alpha_upper_2(str2));
 
     to_lower(str1);
+    to_lower(str2);
     //to_upper(str2);
 
     printf("%s\n%s\n", str1, str2);
@@ -109,6 +112,17 @@ int main(void) {
         printf("%s -> %s\n", str2, str1);
     }
 
+    char *str3 = (char*) calloc(101, sizeof(char));
+
+    strcpy(str3, str2);
+    printf("%s (%p)\n%s (%p)\n", str2, str2, str3, str3);
+
+    strcat(str3, str2);
+    printf("%s (%p)\n", str3, str3);
+
     free(str1);
     free(str2);
+    free(str3);
+
+    return 0;
 }
