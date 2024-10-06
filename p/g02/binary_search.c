@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 
-int binary_search(int *a, int n, int d)
+int binary_search(int *a,int n,int d)
 {
   int lo = 0;
   int hi = n - 1;
-  while(hi > lo)
+  while(hi >= lo)
   {
     int middle = (lo + hi) / 2;
     if(a[middle] == d)
