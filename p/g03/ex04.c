@@ -5,7 +5,7 @@
 
 
 size_t number_digits(int n) {
-    size_t c = (n==0)?1:log10(n)+1;  
+    size_t c = (n==0)?1:log10(n)+1;
     return c;
 }
 
@@ -14,8 +14,7 @@ int* digits(int n, size_t* nd) {
     int* ds = (int*)calloc(*nd, sizeof(int)); 
     size_t i = (*nd)-1;
     
-    while(n)
-    {
+    while(n) {
         ds[i--] = n%10;
         n /= 10;
     }

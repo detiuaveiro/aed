@@ -23,10 +23,8 @@ int check(int *a, int n) {
     if (a[i] == (a[i - 1] + a[i + 1])) {
       result++;
     }
-
     NUM_COMPS++;
   }
-
   return result;
 }
 

@@ -45,7 +45,7 @@ int* digits(int n, size_t* nd) {
 
 int main(int argc, char* argv[]) { 
     // Get the word from arguments
-    for(size_t i = 1; i < argc; i++) {
+    for(size_t i = 1; i < (size_t)argc; i++) {
         int number = atoi(argv[i]);
         size_t nd = 0;
         int *d = digits(number, &nd);

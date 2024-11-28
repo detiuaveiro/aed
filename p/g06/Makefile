@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -std=c17
+CFLAGS=-Wall -std=c11
 
 LIBS=-lrt -lm
 

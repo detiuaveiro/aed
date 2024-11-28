@@ -20,7 +20,7 @@ size_t delannoyR(size_t m, size_t n) {
 }
 
 #define LIMIT 100
-static size_t cacheM[1+LIMIT][1+LIMIT] = {{0}};  // everything else = 0
+static size_t cacheM[1+LIMIT][1+LIMIT] = {{0}}; // everything else = 0
 
 // Recursive Memoized
 size_t delannoyM(size_t m, size_t n) {

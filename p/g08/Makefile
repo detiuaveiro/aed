@@ -6,9 +6,11 @@
 # Options for the C compiler.
 CFLAGS += -g -Wall -Wextra
 
-TARGETS = Tests
+TARGETS = Tests memory
 
 all: $(TARGETS)
+
+memory.o: memory.c
 
 Date.o: Date.c Date.h
 
@@ -17,6 +19,8 @@ Person.o: Person.c Person.h Date.h
 Tests.o: Tests.c Person.h Date.h PersonSet.h
 
 Tests: Tests.o Person.o Date.o PersonSet.o
+
+memory: memory.o
 
 # make tst    # to run program twice and log outputs
 tst: tst-12.txt tst-14.txt

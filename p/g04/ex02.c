@@ -24,7 +24,6 @@ int isGeometricSeq(float *a, int n) {
       return 0;
     }
   }
-
   return 1;
 }
 

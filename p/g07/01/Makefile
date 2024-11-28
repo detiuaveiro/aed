@@ -1,8 +1,8 @@
 EXECUTABLE = 01_example
 
 CC = gcc
-CFLAGS=-Wall -std=c17
-LIBS=-lm
+CFLAGS += -g -Wall -Wextra -std=c11
+LIBS = -lm
 
 src = $(wildcard *.c)
 obj = $(src:.c=.o)

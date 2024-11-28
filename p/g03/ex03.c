@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include <stdbool.h>
+#include<stdbool.h>
 
 
 size_t number_digits(int n) {
@@ -14,8 +14,7 @@ int* digits(int n, size_t* nd) {
     int* ds = (int*)calloc(*nd, sizeof(int)); 
     size_t i = (*nd)-1;
     
-    while(n)
-    {
+    while(n) {
         ds[i--] = n%10;
         n /= 10;
     }
@@ -32,6 +31,8 @@ bool armstrong(unsigned int number) {
         tmp += pow(d[i], nd);
     }
 
+    free(d);
+
     if(number == tmp) {
         return true;
     } else {
@@ -40,6 +41,12 @@ bool armstrong(unsigned int number) {
 } 
 
 int main (void) {
+    /*int v1 = pow(1, 3);
+    int v2 = pow(5, 3);
+    int v3 = pow(3, 3);
+    int t = v1+v2+v3;
+    printf("%d+%d+%d = %d\n", v1,v2,v3,t);*/
+
     unsigned int number = 153;
     printf("%d -> %d\n", number, armstrong(number));
     number = 9474;
