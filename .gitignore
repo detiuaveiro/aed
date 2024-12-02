@@ -1,7 +1,8 @@
-*.tar.xz
 *
 !*/
 !*.*
+
+*.txz
 
 # Prerequisites
 *.d

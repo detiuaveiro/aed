@@ -12,5 +12,5 @@ txz: clean
 
 .PHONY: clean
 clean:
-	$(foreach path,$(DIRECTORIES),rm $(path).txz;)
+	$(foreach path,$(DIRECTORIES),rm -f $(path).txz;)
 	$(foreach path,$(DIRECTORIES),$(MAKE) V=0 -C $(path) clean ;)
