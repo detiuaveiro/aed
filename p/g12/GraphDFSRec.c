@@ -130,3 +130,29 @@ void GraphDFSRecDisplay(const GraphDFSRec* p) {
 
   // TO BE COMPLETED !!
 }
+
+// NEW --- Display the Paths-Tree in DOT format
+void GraphDFSRecDisplayDOT(const GraphDFSRec* p) {
+  assert(p != NULL);
+
+  Graph* original_graph = p->graph;
+  unsigned int num_vertices = GraphGetNumVertices(original_graph);
+
+  // The paths tree is a digraph, with no edge weights
+  Graph* paths_tree = GraphCreate(num_vertices, 1, 0);
+
+  // Use the predecessors array to add the tree edges
+  for (unsigned int w = 0; w < num_vertices; w++) {
+    // Vertex w has a predecessor vertex v?
+    int v = p->predecessor[w];
+    if (v != -1) {
+      GraphAddEdge(paths_tree, (unsigned int)v, w);
+    }
+  }
+
+  // Display the tree in the DOT format
+  GraphDisplayDOT(paths_tree);
+
+  // Housekeeping
+  GraphDestroy(&paths_tree);
+}

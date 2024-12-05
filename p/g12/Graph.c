@@ -384,10 +384,63 @@ int GraphAddWeightedEdge(Graph* g, unsigned int v, unsigned int w,
   return _addEdge(g, v, w, weight);
 }
 
+int _removeEdge(Graph* g, unsigned int v, unsigned int w, double weight) {
+  struct _Edge dummy_edge;
+  dummy_edge.adjVertex = w;
+  dummy_edge.weight = weight;
+
+  ListMove(g->verticesList, v);
+  struct _Vertex* vertex = ListGetCurrentItem(g->verticesList);
+  ListMoveToHead(vertex->edgesList);
+  int rv = ListSearch(vertex->edgesList, &dummy_edge);
+  if (rv == -1) {
+    return 0;
+  } else {
+    struct _Edge* edge = ListGetCurrentItem(vertex->edgesList);
+    ListRemoveCurrent(vertex->edgesList);
+    free(edge);
+  
+    g->numEdges--;
+    vertex->outDegree--;
+
+    ListMove(g->verticesList, w);
+    struct _Vertex* destVertex = ListGetCurrentItem(g->verticesList);
+    destVertex->inDegree--;
+  }
+  
+  if (g->isDigraph == 0) {
+    // Bidirectional edge
+    dummy_edge.adjVertex = v;
+    dummy_edge.weight = weight;
+
+    ListMove(g->verticesList, w);
+    struct _Vertex* vertex = ListGetCurrentItem(g->verticesList);
+    ListMoveToHead(vertex->edgesList);
+    rv = ListSearch(vertex->edgesList, &dummy_edge);
+
+    if (rv == -1) {
+    return 0;
+    } else {
+    struct _Edge* edge = ListGetCurrentItem(vertex->edgesList);
+    ListRemoveCurrent(vertex->edgesList);
+    free(edge);
+  
+    vertex->outDegree--;
+
+    ListMove(g->verticesList, v);
+    struct _Vertex* destVertex = ListGetCurrentItem(g->verticesList);
+    destVertex->inDegree--;
+  }
+  }
+
+  return 1;
+}
+
 int GraphRemoveEdge(Graph* g, unsigned int v, unsigned int w) {
   assert(g != NULL);
-
-  // TO BE COMPLETED !!
+  fprintf(stderr, "_removeEdge\n");
+  _removeEdge(g, v, w,1.0);
+  
 
   return 0;
 }
@@ -462,4 +515,47 @@ void GraphListAdjacents(const Graph* g, unsigned int v) {
   free(array);
 
   printf("---\n");
+}
+
+// Display the graph in DOT language.
+// To draw the graph, you can use dot (from Graphviz) or paste result on:
+//   https://dreampuf.github.io/GraphvizOnline
+void GraphDisplayDOT(const Graph* g) {
+  char* gtypes[] = {"graph", "digraph"};
+  char* edgeops[] = {"--", "->"};
+  char* gtype = gtypes[g->isDigraph];
+  char* edgeop = edgeops[g->isDigraph];
+
+  printf("// Paste in: https://dreampuf.github.io/GraphvizOnline\n");
+  printf("%s {\n", gtype);
+  printf("  // Vertices = %2d\n", g->numVertices);
+  printf("  // Edges = %2d\n", g->numEdges);
+  if (g->isDigraph) {
+    printf("  // Max Out-Degree = %d\n", GraphGetMaxOutDegree(g));
+  } else {
+    printf("  // Max Degree = %d\n", GraphGetMaxDegree(g));
+  }
+
+  List* vertices = g->verticesList;
+  ListMoveToHead(vertices);
+  unsigned int i = 0;
+  for (; i < g->numVertices; ListMoveToNext(vertices), i++) {
+    printf("  %d;\n", i);
+    struct _Vertex* v = ListGetCurrentItem(vertices);
+    List* edges = v->edgesList;
+    unsigned int k = 0;
+    ListMoveToHead(edges);
+    for (; k < ListGetSize(edges); ListMoveToNext(edges), k++) {
+      struct _Edge* e = ListGetCurrentItem(edges);
+      unsigned int j = e->adjVertex;
+      if (g->isDigraph || i <= j) {  // for graphs, draw only 1 edge
+        printf("  %d %s %d", i, edgeop, j);
+        if (g->isWeighted) {
+          printf(" [label=%4.2f]", e->weight);
+        }
+        printf(";\n");
+      }
+    }
+  }
+  printf("}\n");
 }

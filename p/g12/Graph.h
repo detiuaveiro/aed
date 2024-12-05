@@ -1,7 +1,7 @@
 //
-// Algoritmos e Estruturas de Dados --- 2023/2024
+// Algoritmos e Estruturas de Dados --- 2024/2025
 //
-// Joaquim Madeira, Joao Manuel Rodrigues - June 2021, Nov 2023
+// Joaquim Madeira, Joao Manuel Rodrigues - June 2021, Nov 2023, Nov 2024
 //
 // Graph - Using a list of adjacency lists representation
 //
@@ -90,5 +90,7 @@ int GraphCheckInvariants(const Graph* g);
 void GraphDisplay(const Graph* g);
 
 void GraphListAdjacents(const Graph* g, unsigned int v);
+
+void GraphDisplayDOT(const Graph* g);
 
 #endif  // _GRAPH_

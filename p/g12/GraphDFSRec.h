@@ -1,7 +1,7 @@
 //
-// Algoritmos e Estruturas de Dados --- 2023/2024
+// Algoritmos e Estruturas de Dados --- 2024/2025
 //
-// Joaquim Madeira, Joao Manuel Rodrigues - June 2021, Nov 2023
+// Joaquim Madeira, Joao Manuel Rodrigues - May 2020, Nov 2024
 //
 // GraphDFS - RECURSIVE Depth-First Search
 //
@@ -29,5 +29,7 @@ Stack* GraphDFSRecPathTo(const GraphDFSRec* p, unsigned int v);
 void GraphDFSRecShowPath(const GraphDFSRec* p, unsigned int v);
 
 void GraphDFSRecDisplay(const GraphDFSRec* p);
+
+void GraphDFSRecDisplayDOT(const GraphDFSRec* p);
 
 #endif  // _GRAPH_DFS_REC_

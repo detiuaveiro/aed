@@ -1,6 +1,7 @@
 //
-// Joaquim Madeira, AlgC, June 2021
-// João Manuel Rodrigues, AlgC, June 2021
+// Algoritmos e Estruturas de Dados --- 2024/2025
+//
+// Joaquim Madeira, Joao Manuel Rodrigues - June 2021, Nov 2023
 //
 // Graph EXAMPLE : The different traversals
 //
@@ -11,7 +12,7 @@
 #include "GraphDFSWithStack.h"
 
 int main(void) {
-  Graph *g01 = GraphCreate(6, 0, 0);
+  Graph* g01 = GraphCreate(6, 0, 0);
 
   GraphAddEdge(g01, 0, 5);
   GraphAddEdge(g01, 2, 4);
@@ -27,56 +28,55 @@ int main(void) {
   // Recursive DFS traversal
 
   printf("RECURSIVE DFS traversal\n");
-  GraphDFSRec *traversalRec = GraphDFSRecExecute(g01, 0);
+  GraphDFSRec* traversalRec = GraphDFSRecExecute(g01, 0);
 
   printf("Path from 0 to 5: ");
   GraphDFSRecShowPath(traversalRec, 5);
   printf("\n");
 
+  // Display the paths tree in DOT format
+  printf("The paths tree rooted at 0\n");
+  GraphDFSRecDisplayDOT(traversalRec);
+
   GraphDFSRecDestroy(&traversalRec);
 
   // STACK-based DFS traversal
 
+  /* UNCOMMENT THE CODE AFTER COMPLETING THE TRAVERSAL CODE
   printf("DFS traversal with STACK\n");
-  GraphDFSWithStack *traversalWithStack = GraphDFSWithStackExecute(g01, 0);
+  GraphDFSWithStack* traversalWithStack = GraphDFSWithStackExecute(g01, 0);
 
-  printf("Vertices reached, with start vertex %d : ", 0);
-  for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
-    if (GraphDFSWithStackHasPathTo(traversalWithStack, i)) {
-      printf("%d ", i);
-    }
-  }
+  printf("Path from 0 to 5: ");
+  GraphDFSWithStackShowPath(traversalWithStack, 5);
   printf("\n");
 
-  for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
-    printf("Path from %u to %u : ", 0, i);
-    GraphDFSWithStackShowPath(traversalWithStack, i);
-    printf("\n");
-  }
+  // Display the paths tree in DOT format
+  printf("The paths tree rooted at 0\n");
+  GraphDFSWithStackDisplayDOT(traversalRec);
 
   GraphDFSWithStackDestroy(&traversalWithStack);
 
+  */
+
   // QUEUE-based BFS traversal
 
+  /* UNCOMMENT THE CODE AFTER COMPLETING THE TRAVERSAL CODE
   printf("BFS traversal with QUEUE\n");
-  GraphBFSWithQueue *traversalWithQueue = GraphBFSWithQueueExecute(g01, 0);
+  GraphBFSWithQueue* traversalWithQueue = GraphBFSWithQueueExecute(g01, 0);
 
-  printf("Vertices reached, with start vertex %d : ", 0);
-  for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
-    if (GraphBFSWithQueueHasPathTo(traversalWithQueue, i)) {
-      printf("%d ", i);
-    }
-  }
+  printf("Path from 0 to 5: ");
+  GraphBFSWithQueueShowPath(traversalWithQueue, 5);
   printf("\n");
 
-  for (unsigned int i = 0; i < GraphGetNumVertices(g01); i++) {
-    printf("Path from %u to %u : ", 0, i);
-    GraphBFSWithQueueShowPath(traversalWithQueue, i);
-    printf("\n");
-  }
+  // Display the paths tree in DOT format
+  printf("The paths tree rooted at 0\n");
+  GraphBFSWithQueueDisplayDOT(traversalRec);
 
   GraphBFSWithQueueDestroy(&traversalWithQueue);
 
+  */
+
+  // FREE THE GRAPH
   GraphDestroy(&g01);
 
   return 0;
