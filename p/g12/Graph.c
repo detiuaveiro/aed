@@ -156,7 +156,7 @@ void GraphDestroy(Graph** p) {
 Graph* GraphCopy(const Graph* g) {
   assert(g != NULL);
 
-  // TO BE COMPLETED !!
+// TO BE COMPLETED !!
 
   return NULL;
 }
@@ -438,10 +438,7 @@ int _removeEdge(Graph* g, unsigned int v, unsigned int w, double weight) {
 
 int GraphRemoveEdge(Graph* g, unsigned int v, unsigned int w) {
   assert(g != NULL);
-  fprintf(stderr, "_removeEdge\n");
   _removeEdge(g, v, w,1.0);
-  
-
   return 0;
 }
 
